@@ -14,6 +14,8 @@ class KaggleWord2VecUtility(object):
 
     @staticmethod
     def review_to_wordlist(review, remove_stopwords=False):
+        # stopword제거유무, 제거를 했다면 각 단어를 join을 통해 하나로 만들지 않고 그냥 stemming된 상태로 출력한다.
+
         # 1. HTML 제거
         review_text = BeautifulSoup(review, "html.parser").get_text()
         # 2. 특수문자를 공백으로 바꿔줌
@@ -32,6 +34,8 @@ class KaggleWord2VecUtility(object):
 
     @staticmethod
     def review_to_join_words( review, remove_stopwords=False ):
+        # review_to_wordlist + join을 통해 하나로 만든다.
+
         words = KaggleWord2VecUtility.review_to_wordlist(\
             review, remove_stopwords=False)
         join_words = ' '.join(words)
@@ -63,7 +67,6 @@ class KaggleWord2VecUtility(object):
 
     # 참고 : https://gist.github.com/yong27/7869662
     # http://www.racketracer.com/2016/07/06/pandas-in-parallel/
-    # 속도 개선을 위해 멀티 스레드로 작업하도록
     @staticmethod
     def _apply_df(args):
         df, func, kwargs = args
